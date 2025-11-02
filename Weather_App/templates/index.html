@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyCast - Weather Forecast App</title>
+
+    <!-- Google Font for Better Typography ✅ -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Weather Icons CDN (For Weather Symbols) ✅ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+
+    <!-- ✅ External CSS File Linked -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+    <div class="container">
+        <!-- ✅ App Title + Weather Icon -->
+        <h1>
+            <img src="https://cdn-icons-png.flaticon.com/512/1163/1163634.png" width="48" style="vertical-align: middle;">
+            SkyCast - Weather Forecast
+        </h1>
+
+        <!-- ✅ Form to take city input (Uses Flask POST) -->
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter city name..." value="{{ city }}">
+            <button type="submit">Get Forecast</button>
+        </form>
+
+        <!-- ✅ Show error if city is invalid -->
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <!-- ✅ Display Weather Forecast Cards If data available -->
+        {% if weather_data %}
+            <h2>Weather in {{ city.title() }}</h2>
+            <div class="weather-cards">
+                {% for day in weather_data %}
+                    <div class="weather-card">
+                        <h3>{{ day.date }}</h3>
+                        <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="icon">
+                        <p><strong>{{ day.desc }}</strong></p>
+                        <p>🌡️ {{ day.temp }}°C</p>
+                        <p>💧 Humidity: {{ day.humidity }}%</p>
+                        <p>💨 Wind: {{ day.wind }} m/s</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- ✅ Footer -->
+        <footer>Created by Manushi 💙 | Powered by OpenWeatherMap API</footer>
+    </div>
+
+</body>
+</html>
