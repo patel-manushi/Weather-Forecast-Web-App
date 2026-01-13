@@ -1,0 +1,3 @@
+cd /d D:\My_Projects\Weather_App
+venv\Scripts\activate
+python app.py
